@@ -5,6 +5,7 @@
  * Inspired by FgCharting
  * Heavily refactored to reflect Mootools style 
  * and updated to be light-weight on the DOM usage.
+ * By SchizoDuckie
  *
  * --------------------------------------------------------------------
  */
