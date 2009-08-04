@@ -1,0 +1,151 @@
+<!doctype>
+<html>
+<head>
+<title>Mootools 1.2 ChartThingy</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.3/mootools.js"></script>
+<script type="text/javascript" src="mootools.more.color.js"></script>
+<script type="text/javascript" src="chartthingie.js"></script>
+<link rel='stylesheet' type='text/css' href='style.css'></link>
+</head>
+<body>
+<h1>ChartThingy</h1>
+<h2>Mootools 1.2 compatible Table To Chart using Canvas</h2>
+
+<p>I took the the Jquery <a href='http://www.filamentgroup.com/lab/creating_accessible_charts_using_canvas_and_jquery/'>fgCharting Table-To-Charts plugin</a> as a basis, and almost rewrote it from the ground up with nice classes to work with MooTools 1.2. The goal is for this library to be *the* easy charts library for Mootools, that is extendable, understandable and flexible.</p>
+
+<p>Use the options on the right to change the chart type, your browser will render a new chart according to the options (you cannot use the fill options with some, that is by design).</p>
+<p>
+
+
+<div class='options'>
+<form method='post'>
+<h3>Chart options</h3>
+<table>
+<tr>
+
+	<td valign='top'><strong>Chart type:</strong></td>
+	<td><input type='radio' id='charttypebar'  name='chartType' value='Bar'><label for='charttypebar'>Bar</label><br>
+		<input type='radio' id='charttypebarc' name='chartType' checked="true" value='CumulativeBar'><label for='charttypebarc'>Cumulative Bar</label><br>
+		<input type='radio' id='charttypeline' name='chartType' value='Line'><label for='charttypeline'>Line</label><br>
+		<input type='radio' id='charttypelinec' name='chartType' value='CumulativeLine'><label for='charttypelinec'>Cumulative Line</label><br>
+		<input type='radio' id='charttypepie'  name='chartType' value='Pie'><label for='charttypepie'>Pie</label><br>
+
+	</td>
+</tr>
+<tr id='fill'>
+	<td valign='top'><strong>Fill:</strong></td>
+	<td>
+		<input type='radio' id='chartfill1' name='filled' value='1'><label for='chartfill1'>Yes</label><br>
+		<input type='radio' id='chartfill0' name='filled' checked="true" value='0'><label for='chartfill0'>No</label><br>
+	</td>
+
+</tr>
+</table>
+</form>
+</div>
+</form>
+</div>
+
+<script type='text/javascript'>
+	
+	window.addEvent('domready', function() {
+
+	$$('DIV.options INPUT').addEvent('click', function() {
+		var options = {};		
+			$$('INPUT[checked]').each(function(el)
+			{
+				options[el.name] = isNaN(parseInt(el.value)) ? el.value : el.value == 1;
+			});
+		$('fill').setStyle('display', ['Line', 'CumulativeLine'].indexOf(options.chartType) > -1 ? '' : 'none');
+		$('dataTable').toChart(options);
+	});
+
+
+	$('charttypebar').click(); // simulate an onclick on the bar charttype.
+
+});
+
+</script>
+
+
+<table cellspacing='0' id="dataTable" summary="Member Data from 2000 to 2006" >
+	<caption>Member Data from 2000 to 2006</caption>
+	<thead>
+
+		<tr>
+
+			<td></td>
+			<th>2000</th>
+			<th>2001</th>
+			<th>2002</th>
+			<th>2003</th>
+
+			<th>2004</th>
+			<th>2005</th>
+			<th>2006</th>
+		</tr>
+	</thead>
+	<tfoot>
+		
+	</tfoot>
+
+	<tbody>
+		<tr>
+
+			<th>Mary</th>
+			<td>150</td>
+			<td>160</td>
+			<td>40</td>
+
+			<td>120</td>
+			<td>30</td>
+
+			<td>70</td>
+			<td>70</td>
+		</tr>
+		<tr>
+
+			<th>Tom</th>
+			<td>3</td>
+			<td>40</td>
+
+			<td>30</td>
+			<td>45</td>
+			<td>35</td>
+
+			<td>49</td>
+			<td>70</td>
+		</tr>
+
+		<tr>
+			<th >Brad</th>
+			<td>10</td>
+
+			<td>00</td>
+			<td>10</td>
+			<td>85</td>
+
+			<td>25</td>
+			<td>79</td>
+			<td>70</td>
+
+		</tr>
+		<tr>
+			<th >Kate</th>
+			<td>40</td>
+
+			<td>80</td>
+			<td>90</td>
+
+			<td>25</td>
+			<td>15</td>
+			<td>119</td>
+			<td>200</td>
+
+		</tr>		
+	</tbody>
+</table>
+
+
+</body>
+</html>

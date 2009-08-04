@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>Filament Group Lab Example From Page from: Creating accessible charts using canvas and jQuery</title>
+		<link rel="shortcut icon" href="/images/favicon2.ico" type="image/x-icon" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+		<link href="/style/demoPages" media="screen" rel="Stylesheet" type="text/css" />
+
+		<script type="text/javascript" src="fgCharting.jQuery.js"></script>
+
+		  
+		  <style type="text/css">
+	
+BODY
+{
+	font-size: 10px;
+}
+#content h2 {
+clear:left;
+color:#444444;
+font-size:1.7em;
+font-weight:bold;
+line-height:1.2em;
+margin:1.5em 0pt 0.5em;
+}
+#content h3 {
+color:#444444;
+font-size:1.6em;
+font-weight:bold;
+margin:1em 0pt 0.5em;
+}
+#content h4 {
+color:#444444;
+font-size:1.5em;
+font-weight:bold;
+margin:1em 0pt 0.2em;
+}
+
+a:link, a:visited {
+color:#368512;
+text-decoration:underline;
+}
+a:visited {
+color:#8DC262;
+}
+ a:hover {
+color:#2A7801;
+}
+p, li {
+color:#444444;
+font-size:1.4em;
+line-height:1.4em;
+margin:0pt;
+padding:0pt 0pt 1.5em;
+width:60%;
+}
+li {
+list-style-type:disc;
+margin-left:2.5em;
+}
+dt {
+clear:left;
+float:left;
+font-weight:bold;
+}
+dt, dd {
+display:block;
+font-size:1.3em;
+line-height:1.6em;
+padding-right:0.5em;
+}
+
+pre {
+background:#444444 none repeat scroll 0%;
+border:1px solid #111111;
+color:#EEEEEE;
+font-size:1.5em;
+line-height:1.3em;
+margin:0pt 0pt 2em;
+overflow:auto;
+padding:1em;
+width:100%;
+}
+
+fieldset legend {
+font-size: 1.4em;
+}
+table {
+border:1px solid #EEEEEE;
+border-collapse:collapse;
+width:100%;
+}
+table tr, table td, table th {
+border:1px solid #CCCCCC;
+padding:0.3em;
+}
+input.text, textarea {
+background:#FFFFFF none repeat scroll 0%;
+border:1px solid #AAAAAA;
+color:#222222;
+display:block;
+float:left;
+font-size:1.3em;
+height:1.2em;
+padding:0.3em 0.5em;
+width:8.5em;
+}
+input.text:focus, textarea:focus {
+background:#EFEFE7 none repeat scroll 0%;
+}
+textarea {
+display:block;
+float:none;
+font-family:"Segoe UI","Lucida Grande",Verdana,sans-serif;
+font-size:1.3em;
+height:10em;
+padding:1em 10px;
+width:35.7em;
+}
+button, a.button {
+background: #3d8717;
+border:2px solid #2A7802;
+color:#EEEEEE;
+cursor:pointer;
+font-size:1.1em;
+font-weight:bold;
+padding:0.5em 0.6em;
+display: block;
+ text-decoration: none;
+text-align: center;
+width: 8em;
+}
+
+button:hover, a.button:hover {
+color:#FFFFFF;
+}
+label {
+color:#444444;
+display:block;
+font-size:1.4em;
+font-weight:bold;
+margin:0.7em 0pt;
+}
+span.required {
+color:red;
+font-size:0.8em;
+font-weight:normal;
+left:0.2em;
+position:relative;
+top:-0.3em;
+}
+table {width: 400px !important; height: 200px; border-collapse: collapse; color: #555;}
+td, th {text-align: center; border: 1px solid #ddd;  height: 1.5em;}
+th {background: #999; color: #fff;}
+thead th {height: 2.5em; }
+caption {margin: 0 0 .5em; font-size: 1.3em;  text-align: left; font-weight: bold; width: 40em; color: #555;}
+caption em {font-size: .9em; color: orange; font-weight: normal; padding-left: 1em;}
+
+
+/* ----- clear fix for floats ----- */
+/* these styles instruct non-IE browsers to render container elements so that they fully enclose floats */		
+/* without this class applied, a float might hang over the bottom border of it's container */
+.clearfix:after { content: "."; display:block; height:0; clear:both; visibility:hidden; }
+.clearfix { display:inline-block; }		
+
+/* hides clearfix from IE-mac \*/
+* html .clearfix { height:1%; }
+.clearfix { display:block; }
+/* end hide from IE-mac */
+
+
+/*demo styles*/
+
+	canvas{display: block; border: 1px solid #ddd;}
+	
+	div.chartBlock { margin: 1em 0 2em 20px; position: relative; }
+	table input, table span {width: 4em; display: block;text-align: center; height: 1.6em; padding: 2px;  margin:0 auto; border: 1px solid orange; font-size: 1em;}
+	table span {border: 0; padding: 3px; }
+	table input {background: #ffe4bf;}
+	/*show hide content for non js*/
+	div#dataVisualizations, h3 {display: none;}
+	body.hasJS div#dataVisualizations {display: block;}
+	body h3 {display: block; clear: both; margin: 4em 0 .5em;}
+	#copy {margin-top: 5em; border-top: 1px solid #eee; padding: .5em 0;}
+	body li {font-size: 1em;}
+	td,th {width: auto;}
+</style>
+<script type="text/javascript">
+	//demo script
+	$(function(){
+		$('body').addClass('hasJS');
+		
+		$('td, th').each(function(){
+			$(this).wrapInner('<span></span>');
+		});
+		$('td, th').click(function(){
+			$(this).html('<input type="text" value="'+$(this).text()+'" id="tempText"  />');
+			$('#tempText').focus();
+			$('#tempText').blur(function(){
+				var val = $(this).val();
+				if((val*1)!=val || val == '') val = 0;
+				$(this).before('<span>'+val+'</span>').remove();
+				$.fgCharting();
+			});
+			return false;
+		});
+		
+		if($.browser.msie) setTimeout(function(){$.fgCharting();}, 2000);
+		else $.fgCharting();
+
+
+
+	});
+
+</script>
+
+	<script src="/mint/?js" type="text/javascript"></script>
+</head>
+	<body>
+<div id="demoHeader">
+
+		<a href="/"><img src="/images/logo_examples.png" alt="Filament Group, Inc." width="141" height="26" id="logo" /></a>	
+		<h1>This is an example from the Filament Group Lab Article: <a href="/lab/creating_accessible_charts_using_canvas_and_jquery/">Creating accessible charts using canvas and jQuery</a></h1>
+		<p id="copyright">&copy;2009 Filament Group, Inc. All Rights Reserved.</p>
+</div><!-- /demoHeader -->
+	
+
+		<table id="dataTable" summary="Member Data from 2000 to 2006">
+	<caption>Member Data from 2000 to 2006 <em>Click values to edit</em></caption>
+	<thead>
+
+		<tr>
+			<td></td>
+			<th id="2000">2000</th>
+			<th id="2001">2001</th>
+			<th id="2002">2002</th>
+			<th id="2003">2003</th>
+			<th id="2004">2004</th>
+
+			<th id="2005">2005</th>
+			<th id="2006">2006</th>
+		</tr>
+	</thead>
+	<tfoot>
+		
+	</tfoot>
+	<tbody>
+		<tr>
+
+			<th headers="members">Mary</th>
+			<td headers="2000">150</td>
+			<td headers="2001">160</td>
+			<td headers="2002">40</td>
+			<td headers="2003">120</td>
+			<td headers="2004">30</td>
+
+			<td headers="2005">70</td>
+			<td headers="2006">70</td>
+		</tr>
+		<tr>
+			<th headers="members">Tom</th>
+			<td headers="2000">3</td>
+			<td headers="2001">40</td>
+
+			<td headers="2002">30</td>
+			<td headers="2003">45</td>
+			<td headers="2004">35</td>
+			<td headers="2005">49</td>
+			<td headers="2006">70</td>
+		</tr>
+
+		<tr>
+			<th headers="members">Brad</th>
+			<td headers="2000">10</td>
+			<td headers="2001">00</td>
+			<td headers="2002">10</td>
+			<td headers="2003">85</td>
+
+			<td headers="2004">25</td>
+			<td headers="2005">79</td>
+			<td headers="2006">70</td>
+		</tr>
+		<tr>
+			<th headers="members">Kate</th>
+			<td headers="2000">40</td>
+
+			<td headers="2001">80</td>
+			<td headers="2002">90</td>
+			<td headers="2003">25</td>
+			<td headers="2004">15</td>
+			<td headers="2005">119</td>
+			<td headers="2006">200</td>
+
+		</tr>		
+	</tbody>
+</table>
+
+
+
+
+
+
+
+	<h3>Pie Chart Generated from HTML table:</h3>
+	<canvas id="chart1" class="fgCharting_src-dataTable_type-pie" width="400" height="400"></canvas>
+
+
+	</body>
+</html>
